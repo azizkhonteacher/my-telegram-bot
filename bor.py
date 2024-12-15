@@ -1,16 +1,20 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes, MessageHandler, filters
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 
 # Savol yuborish uchun flag
 ASK_QUESTION_STATE = {}
 
+load_dotenv()
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 # Ro'yxatni saqlash
 users_list = []  # Foydalanuvchi ma'lumotlarini saqlash (user_id, ism, familiya, username)
 questions_list = []  # Savollar ro'yxatini saqlash
 
 # Admin ID (o'zingizning Telegram ID yoki boshqa adminning ID si)
-ADMIN_ID = 750589627  # O'zingizning Telegram user ID ni qo'ying
+ADMIN_ID = os.getenv("ADMIN_ID")  # O'zingizning Telegram user ID ni qo'ying
 
 # /start komandasi
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -143,7 +147,7 @@ async def send_questions_list(update: Update, context: ContextTypes.DEFAULT_TYPE
 
 # Botni ishga tushirish
 if __name__ == "__main__":
-    app = ApplicationBuilder().token("5823266460:AAFqEolnXwLKifffW-LBf96mISdSLcK7t_I").build()  # Tokenni almashtiring
+    app = ApplicationBuilder().token(BOT_TOKEN).build()  # Tokenni almashtiring
 
     # Handlerlarni qo'shish
     app.add_handler(CommandHandler("start", start))
